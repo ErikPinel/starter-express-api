@@ -143,7 +143,7 @@ mongoose
     autoIndex: true,
   })
   .then(() => {
-    server.listen(3001, () => {
+    server.listen( () => {
       console.log("SERVER IS RUNNING");
     });
   });
