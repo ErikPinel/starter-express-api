@@ -46,7 +46,6 @@ io.on("connection", (socket) => {
 
   socket.on("join_room", async (data, id) => {
     currentRoom = data;
-    console.log("joinroom" + "id:" + id);
     if (userCountObj[data] == null) {
       userCountObj[data] = 1;
     } else {
@@ -62,17 +61,14 @@ io.on("connection", (socket) => {
       });
     });
 
-    console.log("socket room number" + userCountObj[data]);
     emitRoomSize(data, userCountObj[data], id);
   });
 
   socket.on("send_message", (data) => {
-    console.log(data.data + "send_message");
     emitCode(data);
   });
 
   socket.on("sync_code", ({ socketId, data }) => {
-    console.log("sync" + "----" + data);
     if (data) io.to(socketId).emit("receive_message", data);
   });
 
@@ -82,25 +78,10 @@ io.on("connection", (socket) => {
     io.to(room).emit("room_size", size, id);
 
   socket.on("disconnect", (data) => {
-    console.log("disconnected: " + socket.id);
     userCountObj[currentRoom] -= 1;
   });
 });
 
-// app.post('/api/v1/createLesson/',async function(req,res){
-//     try{
-//         const { lessonName } = req.body;
-//         const newLesson = new Lesson({
-//             lessonName:lessonName,
-//             lastSavedCode:"-"
-//         });
-//         await newLesson.save();
-//         res.status(201).json(newLesson.lastSavedCode);
-//     }catch(err)
-//     {
-//         res.status(409).json({ message: err.message });
-//     }
-// });
 
 app.get('/api/v1/lastSavedCode/:lessonName/',async function(req,res,next){
     try{
