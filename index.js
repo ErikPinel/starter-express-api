@@ -143,7 +143,7 @@ mongoose
     autoIndex: true,
   })
   .then(() => {
-    server.listen('http://lazy-pink-fawn-hose.cyclic.app', () => {
+    server.listen(3001, () => {
       console.log("SERVER IS RUNNING");
     });
   });
